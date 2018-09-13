@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+
+</head>
+<body>
+    <div class="container">
+        <center>
+            <br />
+            <div class="jumbotron" style="font-size: 50px !important"> 
+                AWH Clockwork Project @ViewData["Version"] on @ViewData["Runtime"]!
+            </div>
+        </center>
+    </div>
+	@RenderBody()
+</body>
+</html>

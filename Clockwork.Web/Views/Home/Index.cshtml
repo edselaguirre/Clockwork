@@ -1,0 +1,73 @@
+﻿<script>
+    function UserAction() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("output").innerHTML = this.responseText;
+            }
+        };
+        // xhttp.open("GET", "http://127.0.0.1:5000/api/currenttime", true);
+        xhttp.open("GET", "http://localhost:5000/api/currenttime", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send();
+
+    }
+</script>
+
+<div ng-app="APIModule" ng-controller="Controller as data">
+
+    <div class="container">
+        <div class="row">
+            <div class="col align-self-center">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary" type="submit" ng-click="getRes()">Get the time</button>
+                        </div>
+                        <div class="col-sm-5">
+                            <select class="custom-select" ng-options="value.name for value in data.timeList track by value.id" ng-model="returnUserTime"></select>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="container">
+                    <div class="row">
+                        <table class="table  table-sm table-bordered">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Time</th>
+                                    <th>ClientIP</th>
+                                    <th>UTCTime</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in data.returnData track by $index">
+                                <td>{{item.currentTimeQueryId}}</td>
+                                <td>{{item.time | date: 'short'}}</td>
+                                <td>{{item.clientIp}}</td>
+                                <td>{{item.utcTime | date: 'short'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <hr />
+                <div class="container">
+                    <div class="row  justify-content-between">
+                        <div class="col-sm-1">
+                            <div class="btn-toolbar" role="toolbar">
+                                <div class="btn-group btn-group-sm mr-2" role="group">
+                                    <button class="btn btn-primary" type="submit" ng-disabled="!hasPrev" ng-click="getNextPrev(prevPage)">PrevPage</button>
+                                    <button class="btn btn-primary" type="submit" ng-disabled="!hasNext" ng-click="getNextPrev(nextPage)">NextPage</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="badge badge-primary">{{currentPage}} - {{totalPage}}</span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
